@@ -8,13 +8,15 @@
 <!--card to display data in -->
 <div class="card">
     <!--set up default image -->
+        <!--make a loop with handlebars-->
+    {{#each users}}
 
     <img class="card__image" src="/img/default.jpg" alt="User Profile">
-    <h1 class="card__title">Esra</h1>
-    <div class="card__job">Web Developer</div>
+    <h1 class="card__title">{{this.name}}</h1>
+    <div class="card__job">{{this.job_title}}</div>
     <p class="card__about">
-        I am a Math and Science teacher looking for a career switch upon encountering my passion for creating things and
-        having the ability to share what I make with others!
+        {{this.description}}
     </p>
     <button type="button" class="btn btn-primary">View Profile</button>
+    {{/each}}
 </div>
