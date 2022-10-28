@@ -1,3 +1,5 @@
+const Path= require ("path");
+const { promises: Fs } = require('fs')
 const express = require("express");
 const User = require("./models/User");
 const session = require('express-session');
@@ -14,7 +16,7 @@ app.use(fileUpload())
 //set up static files
 app.use(express.static("public"));
 //to access public folder easily from html, do upload folder
-app.use(express.static("upload"));
+// app.use(express.static("upload"));
 
 
 //to use handlebars as the view engine
@@ -49,6 +51,7 @@ app.get("", async(req, res)=>{
         })
     
 const users = userData.map((project)=> project.get({plain:true}));
+console.log(users)
 res.render("index", {
     users
 })} catch (err){
@@ -59,7 +62,7 @@ res.render("index", {
 })
 
 //want to post
-app.post("", (req, res)=>{
+app.post("", async (req, res)=>{
    //start writing the upload functionality
 //creare a variable name that will hold the file
     //keep consistent with form and call it sampleFile
@@ -72,18 +75,39 @@ app.post("", (req, res)=>{
 //if not empty, grab the file
 //name of the input is sampleFile. __dirname is main directory name
     sampleFile = req.files.sampleFile;
-    uploadPath = __dirname + "/upload/" + sampleFile.name;
+
+    //add code to remove. timestap function --> current# as uploadname
+    uploadPath = __dirname + "/public/upload/" + sampleFile.name;
     //console log to see what object looks like
     console.log(sampleFile);
-
+    const userData = await User.update({profile_image:`/upload/${sampleFile.name}`},{
+        where:{"id":1}});
     //use mv() to place file on server. grab sampleFile object and pass the path
     
     sampleFile.mv(uploadPath, function(err){
         if(err) return res.status(500).send(err);
-    });
+    
 
 //if file is rendered, display a message
-    res.send("File Uploaded");
+app.put("", async(req, res)=>{
+    console.log("hello")
+    try{
+            console.log("hellooo")
+ userData.map((project)=> project.get({plain:true}));
+document.location.reload()} 
+catch (err){
+    res.status(500).json(err)
+}
+
+});
+})
+
+
+
+
+    // res.send("File Uploaded");
+
+
 });
 
 

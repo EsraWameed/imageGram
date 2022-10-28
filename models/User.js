@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 class User extends Model {}
-
+//sequelize data types no spaces? trim whatever is passed
 User.init(
     {
         id: {

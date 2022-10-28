@@ -10,8 +10,15 @@
     <!--set up default image -->
         <!--make a loop with handlebars-->
     {{#each users}}
+    <!--write an if statement to set default image if user has none -->
+{{#if this.profile_image}}
+    <!--populate image source from the one from db from upload folder -->
 
-    <img class="card__image" src="/img/default.jpg" alt="User Profile">
+    <img class="card__image" src={{this.profile_image}} alt="User Profile">
+        <!--if no image -->
+    {{else}}
+    <img class="card__image" src="/images/default.png" alt="User Profile">
+{{/if}}
     <h1 class="card__title">{{this.name}}</h1>
     <div class="card__job">{{this.job_title}}</div>
     <p class="card__about">
