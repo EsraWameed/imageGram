@@ -106,7 +106,7 @@ catch (err){
 
 
     // res.send("File Uploaded");
-
+res.redirect("/");
 
 });
 
