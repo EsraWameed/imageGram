@@ -1,4 +1,5 @@
 const express = require("express");
+const User = require("./models/User");
 const session = require('express-session');
 const exphbs = require("express-handlebars")
 const fileUpload = require("express-fileupload");
@@ -41,8 +42,20 @@ app.set('view engine', 'handlebars');
 
 
 //renders the home (index) page
-app.get("", (req, res)=>{
-    res.render("index")
+app.get("", async(req, res)=>{
+    try{
+        const userData = await User.findAll({
+            where:{"id": 1}
+        })
+    
+const users = userData.map((project)=> project.get({plain:true}));
+res.render("index", {
+    users
+})} catch (err){
+    res.status(500).json(err)
+}
+
+
 })
 
 //want to post
