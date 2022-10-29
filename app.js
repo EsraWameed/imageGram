@@ -42,16 +42,20 @@ const sess = {
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
+app.get("/", async(req, res)=>{
+    
+res.render("")
+})
 
 //renders the home (index) page
-app.get("", async(req, res)=>{
+app.get("/dashboard", async(req, res)=>{
     try{
         const userData = await User.findAll({
             where:{"id": 1}
         })
     
 const users = userData.map((project)=> project.get({plain:true}));
-console.log(users)
+// console.log(users)
 res.render("index", {
     users
 })} catch (err){
@@ -62,7 +66,7 @@ res.render("index", {
 })
 
 //want to post
-app.post("", async (req, res)=>{
+app.post("/dashboard", async (req, res)=>{
    //start writing the upload functionality
 //creare a variable name that will hold the file
     //keep consistent with form and call it sampleFile
@@ -79,9 +83,10 @@ app.post("", async (req, res)=>{
     //add code to remove. timestap function --> current# as uploadname
     uploadPath = __dirname + "/public/upload/" + sampleFile.name;
     //console log to see what object looks like
-    console.log(sampleFile);
+    // console.log(sampleFile);
     const userData = await User.update({profile_image:`/upload/${sampleFile.name}`},{
         where:{"id":1}});
+        console.log(sampleFile.name);
     //use mv() to place file on server. grab sampleFile object and pass the path
     
     sampleFile.mv(uploadPath, function(err){
@@ -89,7 +94,7 @@ app.post("", async (req, res)=>{
     
 
 //if file is rendered, display a message
-app.put("", async(req, res)=>{
+app.put("/dashboard", async(req, res)=>{
     console.log("hello")
     try{
             console.log("hellooo")
@@ -106,7 +111,7 @@ catch (err){
 
 
     // res.send("File Uploaded");
-res.redirect("/");
+res.redirect("/dashboard");
 
 });
 
